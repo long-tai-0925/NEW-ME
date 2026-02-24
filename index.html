@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jiang Presentation</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================
+   全域設定
+========================= */
+
+:root{
+  --bg:#121212;
+  --card:#1e1e1e;
+  --text:#ffffff;
+  --sub:#b3bac3;
+}
+
+.light{
+  --bg:#f5f5f5;
+  --card:#ffffff;
+  --text:#111111;
+  --sub:#444;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  overflow:hidden;
+  transition:.3s;
+}
+
+/* =========================
+   Section (每頁)
+========================= */
+
+.section{
+  height:100vh;
+  width:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  padding:40px 20px;
+  scroll-snap-align:start;
+}
+
+.container{
+  width:100%;
+  max-width:1100px;
+  text-align:center;
+}
+
+/* =========================
+   About Card (結合專案一)
+========================= */
+
+.card{
+  background:var(--card);
+  padding:40px;
+  border-radius:20px;
+  width:320px;
+  margin:auto;
+  box-shadow:0 20px 50px rgba(0,0,0,.4);
+  transition:.3s;
+}
+
+.card img{
+  width:140px;
+  border-radius:20px;
+  margin-bottom:20px;
+  transition:.3s;
+}
+
+.card:hover img{
+  transform:scale(1.1);
+}
+
+.card h1{
+  margin-bottom:10px;
+}
+
+.card p{
+  color:var(--sub);
+  margin-bottom:20px;
+}
+
+.button{
+  display:block;
+  width:100%;
+  padding:12px;
+  margin:8px 0;
+  border-radius:30px;
+  text-decoration:none;
+  color:#fff;
+  font-weight:500;
+  transition:.3s;
+}
+
+.button:hover{
+  transform:scale(1.05);
+}
+
+.fb{background:#1877f2;}
+.ig{background:#e1306c;}
+.thread{background:#333;}
+.line{background:#07B53B;}
+.github{background:#0d1117;}
+.paypal{background:#0070e0;}
+.blog{background:#ff9800;}
+
+/* =========================
+   一般連結頁
+========================= */
+
+.link-list{
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+  margin-top:30px;
+}
+
+.link-item a{
+  display:block;
+  padding:15px;
+  border-radius:15px;
+  background:var(--card);
+  text-decoration:none;
+  color:var(--text);
+  transition:.3s;
+}
+
+.link-item a:hover{
+  transform:translateY(-5px);
+}
+
+/* =========================
+   導覽提示
+========================= */
+
+.nav-hint{
+  position:fixed;
+  right:20px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:12px;
+  opacity:.6;
+}
+
+/* =========================
+   模式切換
+========================= */
+
+.theme-toggle{
+  position:fixed;
+  top:20px;
+  right:20px;
+  background:var(--card);
+  padding:10px 15px;
+  border-radius:30px;
+  cursor:pointer;
+  font-size:14px;
+}
+
+/* =========================
+   手機優化
+========================= */
+
+@media(max-width:768px){
+
+  .card{
+    width:100%;
+    padding:30px;
+  }
+
+  .link-item a{
+    padding:18px;
+    font-size:16px;
+  }
+
+}
+
+</style>
+</head>
+<body class="dark">
+
+<div class="theme-toggle" onclick="toggleTheme()">
+  切換模式
+</div>
+
+<div id="slides">
+
+<!-- =================== About =================== -->
+<section class="section">
+<div class="container">
+<div class="card">
+<img src="mejpg.jpg">
+<h1>Jiang Long Tai</h1>
+<p>目前還沒想到自我介紹，下次再來看ㄅ</p>
+
+<a href="https://www.facebook.com/profile.php?id=100093002904159" class="button fb">Facebook</a>
+<a href="https://www.instagram.com/jiang.0925/" class="button ig">Instagram</a>
+<a href="https://www.threads.net/@jiang.0925" class="button thread">Threads</a>
+<a href="https://line.me/ti/p/cwA85fKSyV" class="button line">Line</a>
+<a href="https://github.com/long-tai-0925" class="button github">GitHub</a>
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XG4PFRG7DB3GU" class="button paypal">PayPal</a>
+<a href="https://longtai.org/" class="button blog">My Blog</a>
+
+</div>
+</div>
+</section>
+
+<!-- =================== Music =================== -->
+<section class="section">
+<div class="container">
+<h1>Music</h1>
+<div class="link-list">
+<div class="link-item">
+<a href="https://music.youtube.com/playlist?list=PLBxSRB5yIg9074aUHBG0QvFzrFds8Jx9f">
+Annin Miru さいこう
+</a>
+</div>
+</div>
+</div>
+</section>
+
+<!-- =================== Experience =================== -->
+<section class="section">
+<div class="container">
+<h1>Experience</h1>
+<div class="link-list">
+<div class="link-item"><a>CloudXact - 網頁工程師</a></div>
+<div class="link-item"><a>NewLand - Discord Bot 工程師</a></div>
+<div class="link-item"><a>SCAICT - 臨時工人</a></div>
+</div>
+</div>
+</section>
+
+<!-- =================== Calendar =================== -->
+<section class="section">
+<div class="container">
+<h1>My Calendar</h1>
+<iframe src="https://calendar.google.com/calendar/embed?height=600&ctz=Asia%2FTaipei"
+width="100%" height="500" style="border:0;"></iframe>
+</div>
+</section>
+
+</div>
+
+<script>
+
+const sections = document.querySelectorAll('.section');
+let current = 0;
+
+function showSlide(index){
+  if(index<0) index=0;
+  if(index>=sections.length) index=sections.length-1;
+  current=index;
+  sections[current].scrollIntoView({behavior:"smooth"});
+}
+
+/* 滾輪控制 */
+window.addEventListener('wheel', e=>{
+  if(e.deltaY>0) showSlide(current+1);
+  else showSlide(current-1);
+});
+
+/* 鍵盤控制 */
+window.addEventListener('keydown', e=>{
+  if(["ArrowDown","ArrowRight","s","S","d","D"].includes(e.key))
+    showSlide(current+1);
+  if(["ArrowUp","ArrowLeft","w","W","a","A"].includes(e.key))
+    showSlide(current-1);
+});
+
+/* 手機滑動 */
+let touchStartY=0;
+window.addEventListener('touchstart',e=>{
+  touchStartY=e.touches[0].clientY;
+});
+window.addEventListener('touchend',e=>{
+  let diff=touchStartY-e.changedTouches[0].clientY;
+  if(diff>50) showSlide(current+1);
+  if(diff<-50) showSlide(current-1);
+});
+
+/* 深淺色 */
+function toggleTheme(){
+  document.body.classList.toggle('light');
+}
+
+</script>
+
+</body>
+</html>
