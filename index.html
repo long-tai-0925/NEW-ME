@@ -426,20 +426,9 @@
   </div>
 </section>
 
-<section>
-  <h2>免費打個廣告</h2>
-  <div class="grid">
-    <a href="https://discord.gg/mrNJp6hHmE">
-      <div class="card">
-        <p style="font-size: 30px;">Join Discord</p>
-        <p style="font-size: 53px;"><img loading="lazy" src="icon/SCAICT_ALL.png" alt="SCAICT" height="230px"></br>中部高中職電資聯合會議</p>
-      </div>
-    </a>
-  </div>
-</section>
-
 <footer>
   <p>© 2026 LongTai Jiang</p>
+
 </footer>
 
 <script>
@@ -459,20 +448,6 @@ reveals.forEach(el => {
   observer.observe(el);
 });
 
-/* 打字效果 */
-const text = "LongTai";
-const target = document.querySelector(".typing");
-
-let i = 0;
-
-function type() {
-  if (i < text.length) {
-    target.textContent += text.charAt(i);
-    i++;
-    setTimeout(type, 120);
-  }
-}
-type();
 
 /* Navbar 縮小 */
 const header = document.querySelector("header");
