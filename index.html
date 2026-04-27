@@ -145,38 +145,10 @@
     </div>
   </section>
 
-  <section id="Support_whit_love">
-    <h2>
-      愛與支援
-    </h2>
-    <div class="grid">
-      <div class="card">
-        <br/>
-        <img loading="lazy" src="public/images/events/SITCON_2026.svg" alt="SITCON 2026" height="60px">
-        <p style="font-size: 20px;">
-          SITCON 2026<br/>
-          個人贊助
-        </p>
-      </div>
-<div class="card">
-        <br/>
-        <img loading="lazy" src="public/images/events/SITCON_2026.svg" alt="SITCON 2026" height="60px">
-        <p style="font-size: 20px;">
-          SITCON 2026<br/>
-          個人贊助
-        </p>
-      </div>
-      <div class="card">
-        <br/>
-        <img loading="lazy" src="public/images/events/SCAICT.png" alt="SITCON 2026" height="60px">
-        <p style="font-size: 20px;">
-          SCAICT<br/>
-          SITCON 2026<br/>
-          社群攤位設備支援
-        </p>
-      </div>
-    </div>
-  </section>
+<section id="Support_whit_love">
+  <h2>愛與支援</h2>
+  <div class="grid" id="support-container"></div>
+</section>
 
 <section id="friend">
   <h2>大電神們</h2>
@@ -229,35 +201,13 @@
   
 
 
-  <section id="Ads">
-    <h2>
-      免費推廣
-      <span style="font-size:16px; font-weight:normal;">
-        (僅推播，參考前請自行評估)
-      </span>
-    </h2>
-    <div class="grid">
-      <div class="card">
-        <img loading="lazy" src="public/images/wuzaun/diamondhost.png" alt="DiamondHost" height="60px">
-        <h3 style="font-size: 30px;">
-          鑽石託管
-        </h3>
-        <p style="font-size: 20px;">
-          鑽石託管提供台灣專業 Minecraft 伺服器託管、MC託管與 Discord
-          機器人託管服務。我們致力於提供高效能、低延遲的託管伺服器體驗，並具備強大的 DDoS 防護。
-        </p>
-      </div>
-      <div class="card">
-        <img loading="lazy" src="public/images/wuzaun/TofuDigailStudio.svg" alt="TofuDigitalStudio" height="60px">
-        <h3 style="font-size: 30px;">
-          好吃豆腐數位工作室
-        </h3>
-        <p style="font-size: 20px;">
-          結合工程品質與商業思維，為您打造可擴展的 Discord Bot 與企業級網站解決方案。
-        </p>
-      </div>
-    </div>
-  </section>
+<section id="Ads">
+  <h2>
+    免費推廣
+    <span style="font-size:16px; font-weight:normal;">(僅推播，參考前請自行評估)</span>
+  </h2>
+  <div class="grid" id="ads-container"></div>
+</section>
 
   <footer>
     <p>
@@ -275,38 +225,9 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const container = document.getElementById('experience-container');
-
-  fetch('experiences.json')
-    .then(response => {
-      if (!response.ok) throw new Error('無法讀取 JSON 資料');
-      return response.json();
-    })
-    .then(data => {
-      container.innerHTML = data.map(item => `
-        <a target="_blank" href="${item.link || '#'}">
-          <div class="card">
-            <br/>
-            <img loading="lazy" src="${item.img}" alt="${item.alt}" height="60px">
-            <p style="font-size: 20px;">
-              ${item.title}<br/>
-              ${item.subtitle ? item.subtitle + '<br/>' : ''}
-              ${item.role}
-            </p>
-          </div>
-        </a>
-      `).join('');
-    })
-    .catch(error => {
-      console.error('載入經驗資料失敗:', error);
-      container.innerHTML = '<p>資料載入中或暫時無法取得...</p>';
-    });
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-  // 渲染 經驗與活動
+  // 1. 經驗與活動
   renderData('experiences.json', 'experience-container', item => `
-    <a target="_blank" href="${item.link}">
+    <a target="_blank" href="${item.link || '#'}">
       <div class="card">
         <br/>
         <img loading="lazy" src="${item.img}" alt="${item.alt}" height="60px">
@@ -319,7 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
     </a>
   `);
 
-  // 渲染 大電神們
+  // 2. 大電神們 (附帶「缺你一個」)
   renderData('friends.json', 'friends-container', friend => `
     <a target="_blank" href="${friend.link}">
       <div class="friend-card">
@@ -332,22 +253,36 @@ document.addEventListener('DOMContentLoaded', () => {
   `, `
     <a target="_blank" href="https://github.com/long-tai-0925/NEW-ME/pulls">
       <div class="friend-card">
-        <div class="friend-avatar">
-          <h1>+</h1>
-        </div>
+        <div class="friend-avatar"><h1>+</h1></div>
         <p>缺你一個</p>
       </div>
     </a>
   `);
+
+  // 3. 愛與支援
+  renderData('support.json', 'support-container', item => `
+    <div class="card">
+      <br/>
+      <img loading="lazy" src="${item.img}" alt="${item.alt}" height="60px">
+      <p style="font-size: 20px;">
+        ${item.title}<br/>
+        ${item.subtitle ? item.subtitle + '<br/>' : ''}
+        ${item.desc}
+      </p>
+    </div>
+  `);
+
+  // 4. 免費推廣
+  renderData('ads.json', 'ads-container', ad => `
+    <div class="card">
+      <img loading="lazy" src="${ad.img}" alt="${ad.alt}" height="60px">
+      <h3 style="font-size: 30px;">${ad.title}</h3>
+      <p style="font-size: 20px;">${ad.desc}</p>
+    </div>
+  `);
 });
 
-/**
- * 通用的資料渲染函式
- * @param {string} url JSON 路徑
- * @param {string} containerId 容器 ID
- * @param {function} template 回傳 HTML 字串的函式
- * @param {string} suffixHtml (可選) 附加在結尾的固定 HTML (例如：缺你一個)
- */
+// 通用的渲染函式
 function renderData(url, containerId, template, suffixHtml = '') {
   const container = document.getElementById(containerId);
   if (!container) return;
@@ -363,7 +298,7 @@ function renderData(url, containerId, template, suffixHtml = '') {
     })
     .catch(error => {
       console.error(`載入 ${url} 失敗:`, error);
-      container.innerHTML = '<p>資料讀取失敗，請確認檔案路徑或格式。</p>';
+      container.innerHTML = '<p>資料載入中或暫時無法取得...</p>';
     });
 }
 </script>
