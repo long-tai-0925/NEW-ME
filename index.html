@@ -177,9 +177,9 @@
     </p>
 
   </footer>
-
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+  // 配置資訊：定義每個區塊的 JSON 路徑、容器 ID 以及對應的 HTML 模板
   const configs = [
     {
       url: 'public/json/experiences.json',
@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <a target="_blank" href="${i.link || '#'}">
           <div class="card">
             <img loading="lazy" src="${i.img}" alt="${i.alt}">
-            <p style="font-size:20px;">
+            <p>
               ${i.title}<br/>
               ${i.subtitle ? i.subtitle + '<br/>' : ''}
               ${i.role}
@@ -222,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
       tpl: s => `
         <div class="card">
           <img loading="lazy" src="${s.img}" alt="${s.alt}">
-          <p style="font-size:20px;">
+          <p>
             ${s.title}<br/>
             ${s.subtitle ? s.subtitle + '<br/>' : ''}
             ${s.desc}
@@ -235,40 +235,54 @@ document.addEventListener('DOMContentLoaded', () => {
       tpl: a => `
         <div class="card">
           <img loading="lazy" src="${a.img}" alt="${a.alt}">
-          <h3 style="font-size:30px;">${a.title}</h3>
-          <p style="font-size:20px;">${a.desc}</p>
+          <h3>${a.title}</h3>
+          <p>${a.desc}</p>
         </div>`
     }
   ];
 
+  // 使用迴圈處理所有配置
   configs.forEach(conf => {
     const el = document.getElementById(conf.id);
     if (!el) return;
+
     fetch(conf.url)
       .then(res => {
-        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        if (!res.ok) throw new Error(`找不到檔案: ${conf.url}`);
         return res.json();
       })
       .then(data => {
+        // 將資料映射成 HTML 並與後綴 (如 "+缺你一個") 結合
         el.innerHTML = data.map(conf.tpl).join('') + (conf.suffix || '');
       })
-      .catch(err => console.error(`載入 ${conf.url} 失敗:`, err));
+      .catch(err => {
+        console.error(`載入 ${conf.url} 失敗:`, err);
+        el.innerHTML = `<p style="color:var(--muted); grid-column: 1/-1; text-align:center;">暫時無法載入內容</p>`;
+      });
   });
 });
 
-// 全域圖片錯誤處理
+/**
+ * 全域圖片錯誤處理監聽器
+ * 當任何 <img> 載入失敗時，會根據所在區塊更換預設圖
+ * 使用 capture phase (true) 確保能監聽到所有 error 事件
+ */
 window.addEventListener('error', function(e) {
-    if (e.target.tagName.toLowerCase() === 'img') {
-        // 防止無限循環 (如果預設圖也掛了)
-        if (e.target.dataset.errorAttempted) return;
-        e.target.dataset.errorAttempted = "true";
+  if (e.target.tagName.toLowerCase() === 'img') {
+    const img = e.target;
 
-        if (e.target.closest('.friend-avatar')) {
-            e.target.src = 'https://www.gravatar.com/avatar/00000000?d=mp';
-        } else {
-            e.target.src = 'public/images/events/nopng.png';
-        }
+    // 防止預設圖也掛掉導致的無窮迴圈
+    if (img.dataset.errorAttempted) return;
+    img.dataset.errorAttempted = "true";
+
+    // 判斷是否為大電神頭像
+    if (img.closest('.friend-avatar')) {
+      img.src = 'https://www.gravatar.com/avatar/00000000?d=mp&s=200';
+    } else {
+      // 其他一般活動或贊助圖片
+      img.src = 'public/images/events/nopng.png';
     }
+  }
 }, true);
 </script>
 </body>
