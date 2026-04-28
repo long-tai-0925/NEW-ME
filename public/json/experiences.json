@@ -1,4 +1,12 @@
 [
+    {
+    "link": "",
+    "img": "public/images/events/Zepro.jpg",
+    "alt": "Zepro",
+    "title": "Zepro",
+    "subtitle": "Taichung",
+    "role": "跑者"
+  },
   {
     "link": "https://scaict.org/",
     "img": "public/images/events/SCAICT.png",
