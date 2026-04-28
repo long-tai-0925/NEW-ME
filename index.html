@@ -184,23 +184,60 @@ document.addEventListener('DOMContentLoaded', () => {
     {
       url: 'public/json/experiences.json',
       id: 'experience-container',
-      tpl: i => `<a target="_blank" href="${i.link || '#'}"><div class="card"><br/><img loading="lazy" src="${i.img}" alt="${i.alt}" height="60px"><p style="font-size:20px;">${i.title}<br/>${i.subtitle ? i.subtitle + '<br/>' : ''}${i.role}</p></div></a>`
+      tpl: i => `
+        <a target="_blank" href="${i.link || '#'}">
+          <div class="card">
+            <img loading="lazy" src="${i.img}" alt="${i.alt}">
+            <p style="font-size:20px;">
+              ${i.title}<br/>
+              ${i.subtitle ? i.subtitle + '<br/>' : ''}
+              ${i.role}
+            </p>
+          </div>
+        </a>`
     },
     {
       url: 'public/json/friends.json',
       id: 'friends-container',
-      tpl: f => `<a target="_blank" href="${f.link}"><div class="friend-card"><div class="friend-avatar"><img loading="lazy" src="${f.avatar}" alt="${f.name}"></div><p>${f.name}</p></div></a>`,
-      suffix: `<a target="_blank" href="https://github.com/long-tai-0925/NEW-ME/pulls"><div class="friend-card"><div class="friend-avatar"><h1>+</h1></div><p>缺你一個</p></div></a>`
+      tpl: f => `
+        <a target="_blank" href="${f.link}">
+          <div class="friend-card">
+            <div class="friend-avatar">
+              <img loading="lazy" src="${f.avatar}" alt="${f.name}">
+            </div>
+            <p>${f.name}</p>
+          </div>
+        </a>`,
+      suffix: `
+        <a target="_blank" href="https://github.com/long-tai-0925/NEW-ME/pulls">
+          <div class="friend-card">
+            <div class="friend-avatar"><h1>+</h1></div>
+            <p>缺你一個</p>
+          </div>
+        </a>`
     },
     {
       url: 'public/json/support.json',
       id: 'support-container',
-      tpl: s => `<div class="card"><br/><img loading="lazy" src="${s.img}" alt="${s.alt}" height="60px"><p style="font-size:20px;">${s.title}<br/>${s.subtitle ? s.subtitle + '<br/>' : ''}${s.desc}</p></div>`
+      tpl: s => `
+        <div class="card">
+          <img loading="lazy" src="${s.img}" alt="${s.alt}">
+          <p style="font-size:20px;">
+            ${s.title}<br/>
+            ${s.subtitle ? s.subtitle + '<br/>' : ''}
+            ${s.desc}
+          </p>
+        </div>`
     },
     {
       url: 'public/json/ads.json',
       id: 'ads-container',
-      tpl: a => `<div class="card"><img loading="lazy" src="${a.img}" alt="${a.alt}" height="60px"><h3 style="font-size:30px;">${a.title}</h3><p style="font-size:20px;">${a.desc}</p></div>`
+      tpl: a => `
+        <div class="card">
+          <img loading="lazy" src="${a.img}" alt="${a.alt}">
+          <h3 style="font-size:30px;">${a.title}</h3>
+          <p style="font-size:20px;">${a.desc}</p>
+        </div>`
     }
   ];
 
@@ -208,22 +245,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const el = document.getElementById(conf.id);
     if (!el) return;
     fetch(conf.url)
-      .then(res => res.json())
-      .then(data => el.innerHTML = data.map(conf.tpl).join('') + (conf.suffix || ''))
-      .catch(err => console.error(`Error loading ${conf.url}:`, err));
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        return res.json();
+      })
+      .then(data => {
+        el.innerHTML = data.map(conf.tpl).join('') + (conf.suffix || '');
+      })
+      .catch(err => console.error(`載入 ${conf.url} 失敗:`, err));
   });
 });
 
+// 全域圖片錯誤處理
 window.addEventListener('error', function(e) {
     if (e.target.tagName.toLowerCase() === 'img') {
-        // 如果是頭像區塊，給頭像預設圖，否則給一般預設圖
+        // 防止無限循環 (如果預設圖也掛了)
+        if (e.target.dataset.errorAttempted) return;
+        e.target.dataset.errorAttempted = "true";
+
         if (e.target.closest('.friend-avatar')) {
             e.target.src = 'https://www.gravatar.com/avatar/00000000?d=mp';
         } else {
             e.target.src = 'public/images/events/nopng.png';
         }
     }
-}, true); // 注意這裡要設為 true，因為 error 事件不會冒泡
+}, true);
 </script>
 </body>
 </html>
