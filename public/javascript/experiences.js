@@ -11,7 +11,8 @@ export const experienceConfig = {
           ${i.role}
         </p>
       </div>
-    </a>
+    </a>`,
+    suffix: `
     <a target="_blank" href="https://t.me/lcngtai">
       <div class="friend-card">
         <div class="friend-avatar"><h1>+</h1></div>
