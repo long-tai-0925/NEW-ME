@@ -3,7 +3,7 @@ name: Sync JSON to README
 on:
   push:
     paths:
-      - 'public/json/experiences.json' # 指向你專案內部的檔案路徑
+      - 'public/json/*.json' # 指向你專案內部的檔案路徑
   workflow_dispatch: # 保留這個，這樣你也可以在 GitHub 介面上手動點擊執行
 
 jobs:
