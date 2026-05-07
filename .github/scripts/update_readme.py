@@ -26,7 +26,7 @@ def render_support(data):
     for supp in data:
         # 修正點：確保對應到你 JSON 的 Key，如果 JSON 是 link/title/subtitle/role 結構：
         title = f"[{supp.get('title')}]({supp.get('link')})" if supp.get('link') else supp.get('title')
-        table += f"| {title} | {supp.get('subtitle', '')} | {supp.get('role', '')} |\n"
+        table += f"| {title} | {supp.get('subtitle', '')} | {supp.get('desc', '')} |\n"
     return table
 
 def update_section(readme, section_id, new_content):
