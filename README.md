@@ -1,4 +1,10 @@
 # Jiang
+
+## Pull-Requests
+### Friends
+[Friends](https://github.com/long-tai-0925/long-tai-0925/blob/main/public/json/friends.json )
+
+
 ## 相關資訊
 | [個人網頁](https://longtai.org/) |
 | [GitHub](https://github.com/long-tai-0925) |
@@ -43,7 +49,3 @@
 | SITCON | Jam the Chaos | 個人贊助 |
 
 <!-- END_SECTION:support -->
-
-# Pull-Requests
-## Friends
-[Friends](https://github.com/long-tai-0925/long-tai-0925/blob/main/public/json/friends.json )
